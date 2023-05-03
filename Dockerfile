@@ -14,6 +14,8 @@ RUN npm install --legacy-peer-deps
 
 # Menentukan user yang akan digunakan ketika menjalankan container. Dalam hal ini, menggunakan user node.
 USER node
+
+RUN sudo chmod -R 777 /app/resources
 # Menentukan perintah yang akan dijalankan ketika container dijalankan.
 # Dalam hal ini, perintah yang dijalankan adalah npm run start:gcp.
 # Perintah CMD hanya dapat dijalankan satu kali pada setiap Dockerfile dan akan menimpa perintah ENTRYPOINT jika ada.
