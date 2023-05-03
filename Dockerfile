@@ -12,12 +12,6 @@ COPY . .
 # dependency yang memiliki versi yang tidak kompatibel dengan dependency lain yang digunakan dalam aplikasi.
 RUN npm install --legacy-peer-deps
 
-# Menentukan user yang akan digunakan ketika menjalankan container. Dalam hal ini, menggunakan user node.
-USER node
-
-# Memberikan hak akses yang diperlukan ke direktori uploads
-RUN mkdir -p app/resources/static/assets/uploads && chown -R node:node app/resources/static/assets/uploads
-
 # Menentukan perintah yang akan dijalankan ketika container dijalankan.
 # Dalam hal ini, perintah yang dijalankan adalah npm run start:gcp.
 # Perintah CMD hanya dapat dijalankan satu kali pada setiap Dockerfile dan akan menimpa perintah ENTRYPOINT jika ada.
