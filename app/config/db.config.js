@@ -1,8 +1,8 @@
 module.exports = {
-  HOST: "localhost",
+  HOST: "34.128.90.124",
   USER: "root",
-  PASSWORD: "",
-  DB: "carbinar",
+  PASSWORD: "password",
+  DB: "db_cars",
   dialect: "mysql",
   pool: {
     max: 5,
