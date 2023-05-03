@@ -17,4 +17,4 @@ USER node
 # Menentukan perintah yang akan dijalankan ketika container dijalankan.
 # Dalam hal ini, perintah yang dijalankan adalah npm run start:gcp.
 # Perintah CMD hanya dapat dijalankan satu kali pada setiap Dockerfile dan akan menimpa perintah ENTRYPOINT jika ada.
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:prod"]
