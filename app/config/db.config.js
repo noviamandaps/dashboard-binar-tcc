@@ -1,7 +1,7 @@
 module.exports = {
   HOST: "35.247.181.16",
-  USER: "dev-novi",
-  PASSWORD: "7@3|NJVjc;7;r'p%@eR*9jgc`z9xQxR",
+  USER: "dev-nopi",
+  PASSWORD: "apaja",
   DB: "db-cars",
   dialect: "mysql",
   pool: {
