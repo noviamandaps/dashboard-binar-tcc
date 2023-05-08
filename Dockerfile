@@ -15,4 +15,7 @@ RUN npm install --legacy-peer-deps
 # Menentukan perintah yang akan dijalankan ketika container dijalankan.
 # Dalam hal ini, perintah yang dijalankan adalah npm run start:gcp.
 # Perintah CMD hanya dapat dijalankan satu kali pada setiap Dockerfile dan akan menimpa perintah ENTRYPOINT jika ada.
+
+# expores 3030
+EXPOSE 3030
 CMD ["npm", "run", "start:prod"]
