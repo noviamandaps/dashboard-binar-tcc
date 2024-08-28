@@ -1,9 +1,10 @@
 module.exports = {
-  HOST: "34.128.90.124",
-  USER: "root",
-  PASSWORD: "password",
-  DB: "db_cars",
-  dialect: "mysql",
+  HOST: 'autorack.proxy.rlwy.net',
+  USER: 'root',
+  PASSWORD: 'NLHBkdpbOPTTQEDtWmPZtqdrsZGRYRnq',
+  DB: 'railway',
+  PORT: '34347',
+  dialect: 'mysql',
   pool: {
     max: 5,
     min: 0,
