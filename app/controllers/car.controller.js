@@ -1,24 +1,27 @@
-const fs = require("fs");
+const fs = require('fs');
 
-const db = require("../models");
+const db = require('../models');
 const Car = db.cars;
 const Op = db.Sequelize.Op;
 
-const multer = require("multer");
+const multer = require('multer');
 
 /* HANDLING IMAGE */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./app/resources/static/assets/uploads");
+    cb(
+      null,
+      process.env.UPLOAD_PATH || './app/resources/static/assets/uploads'
+    );
   },
   filename: function (req, file, cb) {
     const mimeExtension = {
-      "image/jpeg": ".jpeg",
-      "image/jpg": ".jpg",
-      "image/png": ".png",
-      "image/gif": ".gif",
+      'image/jpeg': '.jpeg',
+      'image/jpg': '.jpg',
+      'image/png': '.png',
+      'image/gif': '.gif',
     };
-    cb(null, file.fieldname + "-" + Date.now() + mimeExtension[file.mimetype]);
+    cb(null, file.fieldname + '-' + Date.now() + mimeExtension[file.mimetype]);
   },
 });
 
@@ -29,15 +32,15 @@ exports.uploadFoto = multer({
   fileFilter: (req, file, cb) => {
     console.log(file.mimetype);
     if (
-      file.mimetype === "image/jpeg" ||
-      file.mimetype === "image/jpg" ||
-      file.mimetype === "image/png" ||
-      file.mimetype === "image/gif"
+      file.mimetype === 'image/jpeg' ||
+      file.mimetype === 'image/jpg' ||
+      file.mimetype === 'image/png' ||
+      file.mimetype === 'image/gif'
     ) {
       cb(null, true);
     } else {
       cb(null, false);
-      req.fileError = "File format is not valid";
+      req.fileError = 'File format is not valid';
     }
   },
   limits: { fileSize: maxSize },
@@ -45,8 +48,8 @@ exports.uploadFoto = multer({
 
 exports.fileSizeLimitErrorHandler = (err, req, res, next) => {
   if (err) {
-    req.flash("messageErr", "File gambar terlalu besar");
-    return res.redirect("/add");
+    req.flash('messageErr', 'File gambar terlalu besar');
+    return res.redirect('/add');
   } else {
     next();
   }
@@ -55,15 +58,15 @@ exports.fileSizeLimitErrorHandler = (err, req, res, next) => {
 
 /*HANDLING TAMBAH DATA */
 exports.add = (req, res) => {
-  res.render("addCar", {
-    messageErr: req.flash("messageErr"),
+  res.render('addCar', {
+    messageErr: req.flash('messageErr'),
   });
 };
 
 exports.create = (req, res) => {
   if (!req.body.nama) {
     res.status(400).send({
-      message: "Content can not be empty!",
+      message: 'Content can not be empty!',
     });
     return;
   }
@@ -77,16 +80,16 @@ exports.create = (req, res) => {
 
   Car.create(car)
     .then((data) => {
-      req.flash("message", "Data Berhasil Disimpan");
+      req.flash('message', 'Data Berhasil Disimpan');
 
       /* untuk testing di postman 
           return res.send(data);
       */
-      return res.redirect("/");
+      return res.redirect('/');
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while creating cars",
+        message: err.message || 'Some error occurred while creating cars',
       });
     });
 };
@@ -104,15 +107,15 @@ exports.findAll = (req, res) => {
           return res.send(data);
       */
 
-      res.render("listCar", {
+      res.render('listCar', {
         data: data,
-        message: req.flash("message"),
-        messageDel: req.flash("messageDel"),
+        message: req.flash('message'),
+        messageDel: req.flash('messageDel'),
       });
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving cars.",
+        message: err.message || 'Some error occurred while retrieving cars.',
       });
     });
 };
@@ -125,7 +128,7 @@ exports.edit = (req, res) => {
   Car.findByPk(id)
     .then((data) => {
       if (data) {
-        res.render("editCar", { data: data });
+        res.render('editCar', { data: data });
       } else {
         res.status(404).send({
           message: `Cannot find Car with id=${id}.`,
@@ -134,7 +137,7 @@ exports.edit = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Car with id=" + id,
+        message: 'Error retrieving Car with id=' + id,
       });
     });
 };
@@ -161,7 +164,7 @@ exports.update = (req, res) => {
         /* untuk testing di postman 
           return res.send(car);
         */
-        return res.redirect("/");
+        return res.redirect('/');
       } else {
         res.send({
           message: `Cannot update Car with id=${id}. Maybe Car was not found or req.body is empty!`,
@@ -170,7 +173,7 @@ exports.update = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating Car with id=" + id,
+        message: 'Error updating Car with id=' + id,
       });
     });
 };
@@ -185,12 +188,12 @@ exports.delete = (req, res) => {
   })
     .then((num) => {
       if (num == 1) {
-        req.flash("messageDel", "Data Berhasil Dihapus");
+        req.flash('messageDel', 'Data Berhasil Dihapus');
 
         /* untuk testing di postman 
           return res.send("Data berhasil dihapus");
         */
-        return res.redirect("/");
+        return res.redirect('/');
       } else {
         res.send({
           message: `Cannot delete Car with id=${id}. Maybe Car was not found!`,
@@ -199,7 +202,7 @@ exports.delete = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Car with id=" + id,
+        message: 'Could not delete Car with id=' + id,
       });
     });
 };
